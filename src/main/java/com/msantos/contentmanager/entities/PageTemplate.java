@@ -3,6 +3,8 @@ package com.msantos.contentmanager.entities;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.msantos.contentmanager.entities.components.ContentBtn;
+import com.msantos.contentmanager.entities.components.ContentComplete;
 import com.msantos.contentmanager.entities.components.ContentSimple;
 
 import jakarta.persistence.CascadeType;
@@ -33,4 +35,13 @@ public class PageTemplate {
     @Builder.Default
     @OneToMany(mappedBy = "idPage", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ContentSimple> contentSimple = new ArrayList<>();
+
+    @Builder.Default
+    @OneToMany(mappedBy = "idPage", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ContentComplete> contentComplete = new ArrayList<>();
+
+    @Builder.Default
+    @OneToMany(mappedBy = "idPage", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ContentBtn> contentBtn = new ArrayList<>();
+
 }
