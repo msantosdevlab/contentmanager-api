@@ -3,6 +3,7 @@ package com.msantos.contentmanager.services;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.msantos.contentmanager.dto.PageTemplateDTO;
@@ -19,6 +20,7 @@ import com.msantos.contentmanager.services.exceptions.ResourceNotFoundException;
 
 import jakarta.persistence.EntityNotFoundException;
 
+@Service
 public class PageTemplateService {
 
     @Autowired
