@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class PageTemplateDTO {
-        private Long id;
+    private Long id;
 
     private String namePage;
 
@@ -32,10 +32,15 @@ public class PageTemplateDTO {
     @Builder.Default
     private List<ContentBtnDTO> contentBtn = new ArrayList<>();
 
-        public PageTemplateDTO(PageTemplate entity) {
+    public PageTemplateDTO(PageTemplate entity) {
         id = entity.getId();
         namePage = entity.getNamePage();
-
+        
+        //inicializar para evitar o NullPointerException. O Builder.Default não inicializa a lista para o construtor personalizado.
+        contentSimple = new ArrayList<>();
+        contentComplete = new ArrayList<>();
+        contentBtn = new ArrayList<>();
+ 
         for (ContentSimple contSimple : entity.getContentSimple()) {
             contentSimple.add(new ContentSimpleDTO(contSimple));
         }
@@ -48,5 +53,5 @@ public class PageTemplateDTO {
             contentBtn.add(new ContentBtnDTO(contBtn));
         }
     }
-    
+
 }
