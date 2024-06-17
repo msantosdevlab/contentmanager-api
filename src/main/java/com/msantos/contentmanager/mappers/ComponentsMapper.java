@@ -1,14 +1,23 @@
 package com.msantos.contentmanager.mappers;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.msantos.contentmanager.dto.components.ContentBtnDTO;
 import com.msantos.contentmanager.dto.components.ContentCompleteDTO;
 import com.msantos.contentmanager.dto.components.ContentSimpleDTO;
+import com.msantos.contentmanager.entities.PageTemplate;
 import com.msantos.contentmanager.entities.components.ContentBtn;
 import com.msantos.contentmanager.entities.components.ContentComplete;
 import com.msantos.contentmanager.entities.components.ContentSimple;
+import com.msantos.contentmanager.entities.components.Image;
 import com.msantos.contentmanager.entities.enums.Areas;
+import com.msantos.contentmanager.entities.enums.ImageExtension;
 
 @Component
 public class ComponentsMapper {
@@ -42,6 +51,32 @@ public class ComponentsMapper {
                 .btnTarget(contentBtnDTO.getBtnTarget())
                 .area(Areas.valueOf(contentBtnDTO.getArea().toString()))
                 .build();
+    }
+
+    public List<Image> datasToImages(List<MultipartFile> files, List<String> namesImages, List<Areas> areas,
+            List<PageTemplate> entity) {
+        List<Image> images = new ArrayList<>();
+
+        for (int i = 0; i < files.size(); i++) {
+            MultipartFile file = files.get(i);
+            String nameImage = namesImages.get(i);
+            Areas area = areas.get(i);
+            PageTemplate idPage = entity.get(i);
+            try {
+                Image image = Image.builder()
+                        .file(file.getBytes())
+                        .nameImage(nameImage)
+                        .extension(ImageExtension.valueOf(MediaType.valueOf(file.getContentType())))
+                        .area(area)
+                        .idPage(idPage)
+                        .build();
+                images.add(image);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return images;
     }
 
 }
